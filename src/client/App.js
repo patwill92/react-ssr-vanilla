@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import {renderRoutes} from 'react-router-config'
-import withStyles from 'react-jss'
+import { withStyles } from 'material-ui/styles';
+// import withRoot from './components/hocs/withRoot';
 import Header from './components/Header'
 import {fetchCurrentUser} from "./actions";
 
-const style = {
+const styles = {
   root: {
     margin: 0
   }
@@ -23,6 +24,6 @@ class App extends Component {
 }
 
 export default {
-  component: withStyles(style)(App),
+  component: withStyles(styles)(App),
   loadData: ({dispatch}) => dispatch(fetchCurrentUser())
 };

@@ -5,40 +5,56 @@ import {Provider} from 'react-redux';
 import {renderRoutes} from 'react-router-config'
 import serialize from 'serialize-javascript'
 import Routes from '../client/Routes';
-import {JssProvider} from 'react-jss';
-import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
-import {blue} from 'material-ui/colors';
-import {Helmet} from 'react-helmet'
+import {Helmet} from 'react-helmet';
+import JssProvider from 'react-jss/lib/JssProvider';
+import {withStyles, MuiThemeProvider} from 'material-ui/styles';
+import wrapDisplayName from 'recompose/wrapDisplayName';
+import {SheetsRegistry} from 'react-jss/lib/jss';
+import {create} from 'jss';
+import preset from 'jss-preset-default';
+import {createMuiTheme} from 'material-ui/styles';
+import {red, green} from 'material-ui/colors';
+import createGenerateClassName from 'material-ui/styles/createGenerateClassName';
 
-export default (req, store, context, sheetsRegistry, generateClassName) => {
-  const theme = createMuiTheme({
-    palette: {
-      primary: blue
-    }
-  });
+const theme = createMuiTheme({
+  palette: {
+    primary: green,
+    accent: red,
+    type: 'light',
+  },
+});
+
+const jss = create(preset());
+jss.options.createGenerateClassName = createGenerateClassName;
+
+export const sheetsManager = new Map();
+const sheetsRegistry = new SheetsRegistry();
+
+export default (req, store, context) => {
+  const helmet = Helmet.renderStatic();
   const content = renderToString(
     <Provider store={store}>
       <StaticRouter location={req.url} context={context}>
-        <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
-          <MuiThemeProvider theme={theme}>
-            <div>{renderRoutes(Routes)}</div>
+        <JssProvider registry={sheetsRegistry} jss={jss}>
+          <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
+            {renderRoutes(Routes)}
           </MuiThemeProvider>
         </JssProvider>
       </StaticRouter>
     </Provider>
   );
-  const css = sheetsRegistry.toString();
-  const helmet = Helmet.renderStatic();
+
+  let css = sheetsRegistry.toString();
+
   return `
     <html>
       <head>
         ${helmet.title.toString()}
         ${helmet.meta.toString()}
       </head>
-      <style>body {margin: 0;}</style>
+      <style id='server-side-styles'>${css}</style>
       <body>
         <div id="root">${content}</div>
-        <style id="jss-server-side">${css}</style>
         <script >
           window.INITIAL_STATE = ${serialize(store.getState())}
         </script>

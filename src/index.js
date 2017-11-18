@@ -1,7 +1,6 @@
 import 'babel-polyfill'
 import express from 'express';
 import {matchRoutes} from 'react-router-config'
-import {createGenerateClassName, SheetsRegistry} from 'react-jss'
 import proxy from 'express-http-proxy'
 import Routes from './client/Routes'
 import renderer from './helpers/renderer';
@@ -33,9 +32,7 @@ app.get('*', (req, res) => {
   console.log(promises);
   Promise.all(promises).then(() => {
     const context = {};
-    const sheetsRegistry = new SheetsRegistry();
-    const generateClassName = createGenerateClassName();
-    const content = renderer(req, store, context, sheetsRegistry, generateClassName);
+    const content = renderer(req, store, context);
     if (context.url) {
       return res.redirect(301, context.url)
     }
@@ -45,7 +42,6 @@ app.get('*', (req, res) => {
     res.send(content);
   })
 });
-
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

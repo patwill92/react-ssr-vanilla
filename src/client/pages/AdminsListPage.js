@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import requireAuth from '../components/hocs/requireAuth'
 import {Helmet} from 'react-helmet'
-import withStyles from 'react-jss'
+import { withStyles } from 'material-ui/styles';
 import List, {
   ListItem,
   ListItemAvatar,
@@ -98,6 +98,6 @@ function loadData(store) {
 }
 
 export default {
-  component: connect(mapStateToProps, {fetchAdmins})(withStyles(styles)(requireAuth(AdminsListPage))),
+  component: connect(mapStateToProps, {fetchAdmins})(requireAuth(withStyles(styles)(AdminsListPage))),
   loadData
 }

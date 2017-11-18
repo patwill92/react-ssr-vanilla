@@ -1,20 +1,20 @@
 import React from 'react';
-import withStyles from 'react-jss'
+import { withStyles } from 'material-ui/styles';
 import {Helmet} from 'react-helmet'
 import Text from 'material-ui/Typography'
 import Paper from 'material-ui/Paper'
 import Grid from 'material-ui/Grid'
 
-const style = theme => ({
+const styles = {
   paper: {
     marginTop: 50,
     paddingTop: 50,
     paddingBottom: 50
   },
   text: {
-    fontWeight: theme.typography.fontWeightLight
+    fontWeight: 300
   }
-});
+};
 
 const Home = props => {
   let {classes} = props;
@@ -44,5 +44,5 @@ const Home = props => {
 };
 
 export default {
-  component: withStyles(style)(Home)
+  component: withStyles(styles)(Home)
 };

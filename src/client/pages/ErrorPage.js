@@ -1,11 +1,11 @@
 import React from 'react';
-import withStyles from 'react-jss'
+import { withStyles } from 'material-ui/styles';
 import {Helmet} from 'react-helmet'
 import Text from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
 import Paper from 'material-ui/Paper'
 
-const style = {
+const styles = {
   root: {
     marginTop: 50
   },
@@ -39,5 +39,5 @@ const ErrorPage = ({classes, staticContext = {}}) => {
 };
 
 export default {
-  component: withStyles(style)(ErrorPage)
+  component: withStyles(styles)(ErrorPage)
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux'
-import withStyles from 'react-jss';
+import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
@@ -35,8 +35,7 @@ const styles = {
 };
 
 const Header = props => {
-  const {classes, auth} = props;
-  console.log(auth);
+  const {auth, classes} = props;
   const authButton = auth ?
     (<Button color="contrast">
       <a href='/api/logout'>logout</a>
