@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {renderRoutes} from 'react-router-config'
 import { withStyles } from 'material-ui/styles';
-// import withRoot from './components/hocs/withRoot';
 import Header from './components/Header'
 import {fetchCurrentUser} from "./actions";
 

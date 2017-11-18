@@ -17,6 +17,7 @@ app.use(
     }
   })
 );
+
 app.use(express.static('public'));
 app.get('*', (req, res) => {
   const store = createStore(req);
@@ -29,7 +30,7 @@ app.get('*', (req, res) => {
       })
     }
   });
-  console.log(promises);
+
   Promise.all(promises).then(() => {
     const context = {};
     const content = renderer(req, store, context);
@@ -42,7 +43,9 @@ app.get('*', (req, res) => {
     res.send(content);
   })
 });
+
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
