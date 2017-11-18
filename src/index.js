@@ -1,16 +1,9 @@
 import 'babel-polyfill'
 import express from 'express';
 import {matchRoutes} from 'react-router-config'
-import {SheetsRegistry} from 'react-jss'
+import {createGenerateClassName, SheetsRegistry} from 'react-jss'
 import proxy from 'express-http-proxy'
 import Routes from './client/Routes'
-
-process.env.NPM_CONFIG_LOGLEVEL = 'error';
-process.env.NPM_CONFIG_PRODUCTION = true;
-process.env.NODE_VERBOSE = false;
-process.env.NODE_ENV = 'production';
-process.env.NODE_MODULES_CACHE = true;
-
 import renderer from './helpers/renderer';
 import createStore from './helpers/createStore'
 
@@ -41,7 +34,8 @@ app.get('*', (req, res) => {
   Promise.all(promises).then(() => {
     const context = {};
     const sheetsRegistry = new SheetsRegistry();
-    const content = renderer(req, store, context, sheetsRegistry);
+    const generateClassName = createGenerateClassName();
+    const content = renderer(req, store, context, sheetsRegistry, generateClassName);
     if (context.url) {
       return res.redirect(301, context.url)
     }

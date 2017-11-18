@@ -345,12 +345,6 @@ var _createStore2 = _interopRequireDefault(_createStore);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-process.env.NPM_CONFIG_LOGLEVEL = 'error';
-process.env.NPM_CONFIG_PRODUCTION = true;
-process.env.NODE_VERBOSE = false;
-process.env.NODE_ENV = 'production';
-process.env.NODE_MODULES_CACHE = true;
-
 var app = (0, _express2.default)();
 
 app.use('/api', (0, _expressHttpProxy2.default)('http://react-ssr-api.herokuapp.com', {
@@ -377,7 +371,8 @@ app.get('*', function (req, res) {
   Promise.all(promises).then(function () {
     var context = {};
     var sheetsRegistry = new _reactJss.SheetsRegistry();
-    var content = (0, _renderer2.default)(req, store, context, sheetsRegistry);
+    var generateClassName = (0, _reactJss.createGenerateClassName)();
+    var content = (0, _renderer2.default)(req, store, context, sheetsRegistry, generateClassName);
     if (context.url) {
       return res.redirect(301, context.url);
     }
@@ -1318,7 +1313,7 @@ var _reactHelmet = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function (req, store, context, sheetsRegistry) {
+exports.default = function (req, store, context, sheetsRegistry, generateClassName) {
 
   var theme = (0, _styles.createMuiTheme)({
     palette: {
@@ -1334,7 +1329,7 @@ exports.default = function (req, store, context, sheetsRegistry) {
       { location: req.url, context: context },
       _react2.default.createElement(
         _reactJss.JssProvider,
-        { registry: sheetsRegistry },
+        { registry: sheetsRegistry, generateClassName: generateClassName },
         _react2.default.createElement(
           _styles.MuiThemeProvider,
           { theme: theme },

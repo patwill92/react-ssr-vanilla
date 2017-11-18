@@ -10,19 +10,16 @@ import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
 import {blue} from 'material-ui/colors';
 import {Helmet} from 'react-helmet'
 
-export default (req, store, context, sheetsRegistry) => {
-
-
+export default (req, store, context, sheetsRegistry, generateClassName) => {
   const theme = createMuiTheme({
     palette: {
       primary: blue
     }
   });
-
   const content = renderToString(
     <Provider store={store}>
       <StaticRouter location={req.url} context={context}>
-        <JssProvider registry={sheetsRegistry}>
+        <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
           <MuiThemeProvider theme={theme}>
             <div>{renderRoutes(Routes)}</div>
           </MuiThemeProvider>
@@ -30,10 +27,8 @@ export default (req, store, context, sheetsRegistry) => {
       </StaticRouter>
     </Provider>
   );
-
   const css = sheetsRegistry.toString();
   const helmet = Helmet.renderStatic();
-
   return `
     <html>
       <head>

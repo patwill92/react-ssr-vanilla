@@ -14446,6 +14446,9 @@ var theme = (0, _styles.createMuiTheme)({
   }
 });
 
+var generateClassName = (0, _reactJss.createGenerateClassName)();
+var sheet = new _reactJss.SheetsRegistry();
+
 _reactDom2.default.hydrate(_react2.default.createElement(
   _reactRedux.Provider,
   { store: store },
@@ -14454,7 +14457,7 @@ _reactDom2.default.hydrate(_react2.default.createElement(
     null,
     _react2.default.createElement(
       _reactJss.JssProvider,
-      { registry: new _reactJss.SheetsRegistry() },
+      { registry: sheet, generateClassName: generateClassName },
       _react2.default.createElement(
         _styles.MuiThemeProvider,
         { theme: theme },
