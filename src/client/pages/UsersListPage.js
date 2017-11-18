@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Helmet} from 'react-helmet'
 import { withStyles } from 'material-ui/styles';
-import withRoot from '../components/hocs/withRoot';
 import List, {
   ListItem,
   ListItemAvatar,

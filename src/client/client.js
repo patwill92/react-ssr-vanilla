@@ -9,7 +9,7 @@ import {renderRoutes} from 'react-router-config'
 import axios from 'axios'
 import {createMuiTheme, MuiThemeProvider} from 'material-ui/styles';
 import {red, green} from 'material-ui/colors';
-
+process.env.NODE_ENV = 'production';
 
 import Routes from './Routes'
 import reducers from './reducers'
