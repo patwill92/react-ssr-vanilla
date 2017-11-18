@@ -1314,13 +1314,11 @@ var _reactHelmet = __webpack_require__(5);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (req, store, context, sheetsRegistry, generateClassName) {
-
   var theme = (0, _styles.createMuiTheme)({
     palette: {
       primary: _colors.blue
     }
   });
-
   var content = (0, _server.renderToString)(_react2.default.createElement(
     _reactRedux.Provider,
     { store: store },
@@ -1342,10 +1340,8 @@ exports.default = function (req, store, context, sheetsRegistry, generateClassNa
       )
     )
   ));
-
   var css = sheetsRegistry.toString();
   var helmet = _reactHelmet.Helmet.renderStatic();
-
   return '\n    <html>\n      <head>\n        ' + helmet.title.toString() + '\n        ' + helmet.meta.toString() + '\n      </head>\n      <style>body {margin: 0;}</style>\n      <body>\n        <div id="root">' + content + '</div>\n        <style id="jss-server-side">' + css + '</style>\n        <script >\n          window.INITIAL_STATE = ' + (0, _serializeJavascript2.default)(store.getState()) + '\n        </script>\n        <script src="bundle.js"></script>\n      </body>\n    </html>\n  ';
 };
 
