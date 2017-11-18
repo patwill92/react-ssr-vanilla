@@ -23,14 +23,6 @@ const store = createStore(
   applyMiddleware(thunk.withExtraArgument(axiosInstance))
 );
 
-class Main extends React.Component {
-  render() {
-    return (
-      <div>{renderRoutes(Routes)}</div>
-    )
-  }
-}
-
 const theme = createMuiTheme({
   palette: {
     primary: blue
@@ -45,7 +37,7 @@ ReactDOM.hydrate(
     <BrowserRouter>
       <JssProvider registry={sheet} generateClassName={generateClassName}>
         <MuiThemeProvider theme={theme}>
-          <Main/>
+          <div>{renderRoutes(Routes)}</div>
         </MuiThemeProvider>
       </JssProvider>
     </BrowserRouter>

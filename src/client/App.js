@@ -11,7 +11,6 @@ const style = {
 };
 
 class App extends Component {
-
   render() {
     let {route, classes} = this.props;
     return (
